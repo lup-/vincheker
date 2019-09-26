@@ -2,9 +2,68 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Авто</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    Привет, ад!
+
+<div class="container pt-4 pb-4" id="app">
+    <section v-if="report">
+        <div class="row">
+            <div class="col-sm-6 mb-4">
+                <ul class="list-group">
+                    <li class="list-group-item active"><h3>Авто</h3></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Марка/модель <span class="">{{report.vehicle.brand}}/{{report.vehicle.model || '-'}}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Цвет <span class="">{{report.vehicle.color}}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Регистрационный номер <span class="">{{report.vehicle.regNumber}}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Рыночная стоимость <span class="">{{report.vehicle.price}} руб</span>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="col-sm-6 mb-4">
+                <ul class="list-group">
+                    <li class="list-group-item active"><h3>Анализ</h3></li>
+                    <li :class="[getReportEntryClass(entry)]" class="list-group-item d-flex justify-content-between align-items-center" v-for="entry in report.analysis">
+                        {{entry.title}} <span class="">{{entry.value}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row d-flex">
+            <h2 :class="['alert-'+report.result.type]" class="alert flex-fill text-center">
+                {{report.result.text}} </h2>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <button @click="report = false" class="btn btn-outline-primary bnt-lng" type="button">Пробить другое авто
+            </button>
+        </div>
+    </section>
+    <form class="form-inline" v-else>
+        <div class="form-group">
+            <label class="mr-2 mb-2" for="vin">VIN</label>
+            <input class="form-control mb-2 mr-2" id="vin" placeholder="Z94CB41AAGR323020" type="text" v-model="vin">
+
+            <button @click="queryVin" class="btn btn-primary mb-2" type="button" v-if="isVinOK">Пробить авто</button>
+            <button class="btn btn-primary disabled mb-2" disabled="disabled" type="button" v-else>Пробить авто</button>
+
+        </div>
+    </form>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="./script.js"></script>
+
 </body>
 </html>

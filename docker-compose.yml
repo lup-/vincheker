@@ -3,7 +3,7 @@ version: "3"
 services:
   nginx:
     image: nginx
-    container_name: 'nginx'
+    container_name: 'vinchecker_nginx'
     ports:
       - 8080:80
     volumes:
@@ -14,7 +14,7 @@ services:
 
   backend:
     image: node
-    container_name: 'backend'
+    container_name: 'vinchecker_backend'
     ports:
       - 3000:3000
     depends_on:
@@ -31,7 +31,7 @@ services:
 
   mongo:
     image: mongo
-    container_name: 'mongo'
+    container_name: 'vinchecker_mongo'
     volumes:
       - ./etc/database:/data/db
     restart: always
